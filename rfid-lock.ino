@@ -4,7 +4,7 @@
 //SoftSerial Shield is connected to the Software UART:D2&D3 
  
 #include <SoftwareSerial.h>
-#define relay 8
+#define relay 6
  
 SoftwareSerial rfid1(2, 3);
 SoftwareSerial rfid2(4, 5);
@@ -29,24 +29,24 @@ void setup() {
 }
  
 void loop() {
-  while (rfid1.available()) {	// reading data into char array 
-    count++;
-    buffi[count] = rfid1.read();
+	while (rfid1.available()) {	// reading data into char array
+		count++;
+		buffi[count] = rfid1.read();
     
-    // Sanity check
-    if (count == 64)
-      break;
+		// Sanity check
+		if (count == 64)
+			break;
 
-	// The real work is here. 13 is the amount of chars you want from normal RFID cards
-    if (count == 13) {
-      if (check_buffer())
-        valid_card();
-      else
-        Serial.println("INVALID card");
-      clear_buffer();
-      count=-1;
-    }
-  }
+		// The real work is here. 13 is the amount of chars you want from normal RFID cards
+		if (count == 13) {
+			if (check_buffer())
+				valid_card();
+			else
+				Serial.println("INVALID card");
+			clear_buffer();
+			count=-1;
+		}
+	}
 }
 
 void valid_card(void) {
